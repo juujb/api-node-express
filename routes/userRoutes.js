@@ -1,5 +1,6 @@
 const fileSystem = require('fs');
-const { join, existsSync, readFileSync, write } = fileSystem;
+const { join } = require('path');
+const { existsSync, readFileSync, write } = fileSystem;
 
 const filePath = join(__dirname, 'users.json');
 
@@ -22,6 +23,13 @@ const userRoute = (app) => {
     .get((req, res) => {
       const users = getUsers();
       res.send({ users });
+    })
+    .post((req, res) => {
+      const users = getUsers();
+      users.push(req.body)
+      saveUser(users)
+
+      res.send(201).send('OK')
     })
 }
 
